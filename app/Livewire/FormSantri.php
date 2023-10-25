@@ -43,15 +43,13 @@ class FormSantri extends Component
     public $berhasilDaftar = false;
 
     private $programIdnModel;
+    private $cabangIdnModel;
 
     public function boot(ProgramIdn $programIdnModel)
     {
         $this->programIdnModel = $programIdnModel;
-    }
-
-    public function mount()
-    {
-        $this->cabangIdns = CabangIdn::all();
+        $this->cabangIdnModel = CabangIdn::with(['programs']);
+        $this->cabangIdns = $this->cabangIdnModel->get();
     }
 
     public function updatedCabangIdn()
@@ -73,38 +71,33 @@ class FormSantri extends Component
 
     public function cabangJonggolIkhwan()
     {
+        $this->kuotaFull = false;
+        $cabangIdn = $this->cabangIdnModel->where('id', $this->cabangIdn)->first();
+        $programIdn = $this->programIdnModel->find($this->programIdn);
         if ($this->cabangIdn == 1) {
-
-            $this->kuotaFull = false;
-
-            foreach ($this->cabangIdns as $cabang) {
-                if ($cabang->id == 1) {
-                    $programIdn = $this->programIdnModel->find($this->programIdn);
-                    $cabangIdn = $cabang->nama_cabang;
-                    if ($this->programIdn == 1) {
-
-                        if ($cabang->kuota_smp >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+            if ($cabangIdn->id == 1) {
+                if ($this->programIdn == 1) {
+                    if ($cabangIdn->kuota_smp >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 2) {
-                        if ($cabang->kuota_tkj >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+                }
+                if ($this->programIdn == 2) {
+                    if ($cabangIdn->kuota_tkj >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 3) {
-                        if ($cabang->kuota_rpl >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+                }
+                if ($this->programIdn == 3) {
+                    if ($cabangIdn->kuota_rpl >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 4) {
-                        if ($cabang->kuota_dkv >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+                }
+                if ($this->programIdn == 4) {
+                    if ($cabangIdn->kuota_dkv >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
                 }
             }
@@ -113,25 +106,27 @@ class FormSantri extends Component
 
     public function cabangJonggolAkhwat()
     {
+        $this->kuotaFull = false;
+        $cabangIdn = $this->cabangIdnModel->where('id', $this->cabangIdn)->first();
+        $programIdn = $this->programIdnModel->find($this->programIdn);
         if ($this->cabangIdn == 2) {
-
-            $this->kuotaFull = false;
-
-            foreach ($this->cabangIdns as $cabang) {
-                $programIdn = $this->programIdnModel->find($this->programIdn);
-                $cabangIdn = $cabang->nama_cabang;
-                if ($cabang->id == 2) {
-                    if ($this->programIdn == 5) {
-                        if ($cabang->kuota_smp >= 5) $this->kuotaFull = true;
-                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
+            if ($cabangIdn->id == 2) {
+                if ($this->programIdn == 5) {
+                    if ($cabangIdn->kuota_smp >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 6) {
-                        if ($cabang->kuota_rpl >= 5) $this->kuotaFull = true;
-                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
+                }
+                if ($this->programIdn == 6) {
+                    if ($cabangIdn->kuota_rpl >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 7) {
-                        if ($cabang->kuota_dkv >= 5) $this->kuotaFull = true;
-                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
+                }
+                if ($this->programIdn == 7) {
+                    if ($cabangIdn->kuota_dkv >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
                 }
             }
@@ -140,36 +135,33 @@ class FormSantri extends Component
 
     public function cabangSentul()
     {
+        $this->kuotaFull = false;
+        $cabangIdn = $this->cabangIdnModel->where('id', $this->cabangIdn)->first();
+        $programIdn = $this->programIdnModel->find($this->programIdn);
         if ($this->cabangIdn == 3) {
-            $this->kuotaFull = false;
-
-            foreach ($this->cabangIdns as $cabang) {
-                $programIdn = $this->programIdnModel->find($this->programIdn);
-                $cabangIdn = $cabang->nama_cabang;
-                if ($cabang->id == 3) {
-                    if ($this->programIdn == 8) {
-                        if ($cabang->kuota_smp >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+            if ($cabangIdn->id == 3) {
+                if ($this->programIdn == 8) {
+                    if ($cabangIdn->kuota_smp >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 9) {
-                        if ($cabang->kuota_tkj >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+                }
+                if ($this->programIdn == 9) {
+                    if ($cabangIdn->kuota_tkj >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 10) {
-                        if ($cabang->kuota_rpl >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+                }
+                if ($this->programIdn == 10) {
+                    if ($cabangIdn->kuota_rpl >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
-                    if ($this->programIdn == 11) {
-                        if ($cabang->kuota_dkv >= 5) {
-                            $this->kuotaFull = true;
-                            $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn]);
-                        }
+                }
+                if ($this->programIdn == 11) {
+                    if ($cabangIdn->kuota_dkv >= 5) {
+                        $this->kuotaFull = true;
+                        $this->dispatch('kuotaFull', [true, $programIdn->name, $cabangIdn->nama_cabang]);
                     }
                 }
             }

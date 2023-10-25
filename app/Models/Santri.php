@@ -13,6 +13,6 @@ class Santri extends Model
 
     public function programidn()
     {
-        return $this->belongsTo(ProgramIdn::class, 'programidn_id', 'id');
+        return $this->belongsTo(ProgramIdn::class, 'cabangidn_id', 'id');
     }
 }
