@@ -18,3 +18,9 @@
 ## import DB
 
 `sudo mysql -uroot -p dbName < sql/idn.sql`
+
+## Login Account
+
+email : `user1@gmail.com`
+
+password: `password`
